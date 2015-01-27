@@ -5,7 +5,7 @@ $this->inc('elements/header.php'); ?>
 $u = new User();
 $user =  $u->getUserName();
  if($user == '' ){
- 	header('Location:http://ec2-54-174-18-220.compute-1.amazonaws.com/streetsto/index.php/splash');
+ 	header('Location:http://sto.apengage.io/streetsto/index.php/splash');
  	die();
  }
 
@@ -73,9 +73,7 @@ $(document).ready(function(){
 				});
 		}
 	}
-	
 
-	
 	function getList(type){
 		$("#backContainer").empty();
 		$("#backContainer").append('<span class="backButton" id="back"> < </span>');
@@ -144,19 +142,13 @@ $(document).ready(function(){
 		});
 	}*/
 
-
 	function typeBack(previous){
 		type = previous;
 		getList(type);
 
 	}
 
-
-	
-
 });
-
-
 
 </script>
 

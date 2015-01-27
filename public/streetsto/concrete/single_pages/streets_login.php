@@ -37,7 +37,7 @@ if(isset($_GET['cEmail'])){
     $userID = $_GET['cID'];
     User::loginByUserID($userID);
     echo "loggedin GET";
-    header("location: http://ec2-54-174-18-220.compute-1.amazonaws.com/streetsto/index.php");
+    header("location: http://sto.apengage.io/streetsto/index.php");
     exit;
 ?>
 <?php

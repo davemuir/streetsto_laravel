@@ -5,16 +5,16 @@ $blocks = $as->getTotalBlocksInArea();
 $displayThirdColumn = $blocks > 0 || $c->isEditMode();
 
 ?>
-<script src="http://ec2-54-174-18-220.compute-1.amazonaws.com/streetsto/concrete/js/uisearch.js"></script>
-<script src="http://ec2-54-174-18-220.compute-1.amazonaws.com/streetsto/concrete/js/classie.js"></script>
+<script src="http://sto.apengage.io/streetsto/concrete/js/uisearch.js"></script>
+<script src="http://sto.apengage.io/streetsto/concrete/js/classie.js"></script>
 <style>
 @font-face {
     font-family: 'icomoon';
-    src:url('http://ec2-54-174-18-220.compute-1.amazonaws.com/streetsto/concrete/themes/elemental/css/icomoon/icomoon.eot');
-    src:url('http://ec2-54-174-18-220.compute-1.amazonaws.com/streetsto/concrete/themes/elemental/css/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
-        url('http://ec2-54-174-18-220.compute-1.amazonaws.com/streetsto/concrete/themes/elemental/css/icomoon/icomoon.woff') format('woff'),
-        url('http://ec2-54-174-18-220.compute-1.amazonaws.com/streetsto/concrete/themes/elemental/css/icomoon/icomoon.ttf') format('truetype'),
-        url('http://ec2-54-174-18-220.compute-1.amazonaws.com/streetsto/concrete/themes/elemental/css/icomoon/icomoon.svg#icomoon') format('svg');
+    src:url('http://sto.apengage.io/streetsto/concrete/themes/elemental/css/icomoon/icomoon.eot');
+    src:url('http://sto.apengage.io/streetsto/concrete/themes/elemental/css/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
+        url('http://sto.apengage.io/streetsto/concrete/themes/elemental/css/icomoon/icomoon.woff') format('woff'),
+        url('http://sto.apengage.io/streetsto/concrete/themes/elemental/css/icomoon/icomoon.ttf') format('truetype'),
+        url('http://sto.apengage.io/streetsto/concrete/themes/elemental/css/icomoon/icomoon.svg#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -139,13 +139,13 @@ input[type="search"].sb-search-input {
             <div id="sb-search" class="sb-search">
 
 
-                  <form name='search' action="<?php  echo $this->url('search','search_all') ?>" method="POST">
+                <form name='search' action="<?php  echo $this->url('search','search_all') ?>" method="POST">
                        
                             <input class="sb-search-input" id="search" name="subject" placeholder="Enter your search term..." value="" type="search">
                            <input class="sb-search-submit" type="submit" value="">
-                           <!-- <button class="sb-search-submit" id="searchBtn"><?php echo t('Search') ?></button>-->
+                           
                             <span class="sb-icon-search"></span>
-                </form>
+                </form> 
             </div>
 
            
