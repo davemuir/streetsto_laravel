@@ -25,7 +25,17 @@ public function view(){
 	$inactiveArray = Offer::where('active', false)->where('company_id',$user->companyID)->get();
 	return View::make('/perks/index')->with('activeArray',$activeArray)->with('inactiveArray',$inactiveArray);
 }
-
+public function create(){
+		$user= Auth::user();
+		if ($user) {
+     
+		$company = $user->company;
+		return $company;
+		exit;
+		$beams = $company->perks;
+		return View::make('/perks/create')->with('beams', $beams);
+	}
+}
 public function newPerk(){
 	return View::make('/cms/new');
 }

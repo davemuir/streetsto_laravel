@@ -19,10 +19,13 @@ Route::post("/login", ["as" => "login form","uses" => "UserController@loginForm"
 Route::get("/logout", ["as" => "user/logout", "uses" => "UserController@logoutAction"]);
 Route::post("/register", ["as" => "register form","uses" => "UserController@registerForm"]);
 Route::get("/passwordReset", ["as" => "Reset Password", "uses" => "UserController@passwordView"]);
+//email calls
+ Route::any("/autoAdd/{fname?}/{lname?}/{email?}/{company?}",["as" => "Auto Add User", "uses" => "UserController@autoAddUser"]);
+
 //dashboard
 Route::group(["before" => "auth"], function () {
 Route::get("/dashboard", ["as" => "dashboard", "uses" => "DashboardController@view"] );
-Route::get("/analytics/index", ["as" => "Analytics", "uses" => "AnalyticsController@view"] );
+Route::get("/analytics/index", ["as" => "Analytics", "uses" => "AnalyticsController@view"]);
 Route::get("/beacons", ["as" => "Beacons", "uses" => "BeaconsController@view"] );
 //cms routes
 Route::get("/cms/index", ["as" => "CMS", "uses" => "PerksController@cms"] );
@@ -32,8 +35,13 @@ Route::get("/cms/new", ["as" => "new perk", "uses" => "PerksController@newPerk"]
 Route::post("/cms/new", ["as" => "store new perk", "uses" => "PerksController@storeNewPerk"]);
 Route::any("/cms/remove/{perkID?}", ["as" => "remove perk", "uses" => "PerksController@removePerk"]);
 
+//beacons
+Route::get("/beacons/index", ["as" => "beacons", "uses" => "BeaconsController@view"]);
+Route::post("/beacons/store", ["as" => "Save Beacons", "uses" => "UserController@saveBeacons"]);
+
 //offering
- //Route::resource('campaigns', 'CampaignController');
+//Route::resource('campaigns', 'CampaignController');
 Route::get("/perks/index", ["as" => "Perks", "uses" => "PerksController@view"] );
 Route::get('/perks/edit/{offerID}', ["as" => 'edit offer', "uses" =>'PerksController@editOffer']);
+Route::get('/perks/create', ["as" => 'create offer', "uses" =>'PerksController@create']);
 });

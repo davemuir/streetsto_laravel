@@ -87,7 +87,7 @@ $(document).ready(function(){
 
     <div class="campaignBar">
 
-        <a id="newCampaign" class="btn btn-primary btn-mini" href="{{ URL::to('campaigns/create') }}">New Campaign +</a>
+        <a id="newCampaign" class="btn btn-primary btn-mini" href="{{ URL::to('perks/create') }}">New Offer</a>
         <button id='compareSubmit' class="btn btn-primary btn-mini">Compare Selected</button>
 
     </div>

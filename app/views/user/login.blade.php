@@ -69,6 +69,7 @@
 			<div class="col-md-4">	    
 			    {{Form::text('phone', Input::get('phone'), ["id"=>"placeLogin",'placeholder' => 'Phone No.', 'class' => 'form-control'])}}
 			</div>
+
 			<div class="col-md-4">
 			
 			    {{Form::password('password', ["id"=>"placeLogin",'placeholder' => 'Password', 'class' => 'form-control'])}}

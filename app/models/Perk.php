@@ -19,7 +19,7 @@ class Perk extends Mongap {
 	}
 
 		public function campaign() {
-		return $this->belongsToMany('Campaigns');
+		return $this->belongsToMany('Offers');
 	}
 
 	public function toggleApproved(){

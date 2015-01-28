@@ -106,9 +106,9 @@ class User extends Mongap implements UserInterface, RemindableInterface {
    *
    * @return null
    */
-  /*public function company() {
+  public function company() {
     return $this->belongsTo('Company');
-  }*/
+  }
 
 }
 
