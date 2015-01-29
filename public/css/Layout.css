@@ -613,3 +613,22 @@ a.mediaList.selected img {
 
 .buttonChart.active {
   background-color: rgba(0, 0, 45, 0.3) !important; }
+
+
+
+#loginHeader {
+  
+    margin-left: 50px;
+  
+}
+#loginHeader .col-md-6 {
+  
+    float: none;
+  
+}
+
+.row-register .col-md-4 {
+  
+    float: none;
+  
+}
