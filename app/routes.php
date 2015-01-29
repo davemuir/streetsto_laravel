@@ -12,16 +12,20 @@
 */
 //get the user
 $user =Auth::user();
+
 //login routes
-Route::get('/',  ["as" => "Login","uses" => "UserController@view"]);
+Route::get("/", ["as" => "Login","uses" => "UserController@view"]);
 Route::get("/login", ["as" => "login","uses" => "UserController@view"]);
 Route::post("/login", ["as" => "login form","uses" => "UserController@loginForm"]);
 Route::get("/logout", ["as" => "user/logout", "uses" => "UserController@logoutAction"]);
 Route::post("/register", ["as" => "register form","uses" => "UserController@registerForm"]);
 Route::get("/passwordReset", ["as" => "Reset Password", "uses" => "UserController@passwordView"]);
+//Route::post("/forgotPassword", ["as" => "Forgot Password", "uses" => "UserController@forgotPassword"]);
+Route::post("/", ["as" => "Forgot Password", "uses" => "UserController@forgotPassword"]);
 //email calls
- Route::any("/autoAdd/{fname?}/{lname?}/{email?}/{company?}",["as" => "Auto Add User", "uses" => "UserController@autoAddUser"]);
-
+Route::any("/autoAdd/{fname?}/{lname?}/{email?}/{company?}",["as" => "Auto Add User", "uses" => "UserController@autoAddUser"]);
+ 
+ 
 //dashboard
 Route::group(["before" => "auth"], function () {
 Route::get("/dashboard", ["as" => "dashboard", "uses" => "DashboardController@view"] );
@@ -44,4 +48,11 @@ Route::post("/beacons/store", ["as" => "Save Beacons", "uses" => "UserController
 Route::get("/perks/index", ["as" => "Perks", "uses" => "PerksController@view"] );
 Route::get('/perks/edit/{offerID}', ["as" => 'edit offer', "uses" =>'PerksController@editOffer']);
 Route::get('/perks/create', ["as" => 'create offer', "uses" =>'PerksController@create']);
+
 });
+//TEST
+//Route::get('/b1',  ["as" => "","uses" => "B1Controller@view"] );
+//Route::get('/', function(){ return 'Hello World'; });
+//Route::get('/b1',  ["as" => "reset","uses" => "B1Controller@view"] );
+//Route::get('', 'B1Controller@view');
+//Route::post('/b1', 'B1Controller@view');

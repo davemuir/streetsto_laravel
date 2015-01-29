@@ -24,27 +24,16 @@
 
           <div id="text_content" style="width:  90%; margin:0 auto;">
 
-            <h2 style="font-family: 'Lato', sans-serif;">Your password has been reset</h2>
-
-            <h3 style="font-family: 'Lato', sans-serif;">Your sign up details are below:</h3>
-            
-            <ul>
-
-              <li style="font-family: 'Lato', sans-serif;">First Name - {{$fname}}</li>
-              <li style="font-family: 'Lato', sans-serif;">Last Name - {{$lname}}</li>
-              <li style="font-family: 'Lato', sans-serif;">Temporary Password - {{$tempPass}}</li>
+            <h2 style="font-family: 'Lato', sans-serif;">Have you forgotten your password?</h2>
+             <ul>
+              <li style="font-family: 'Lato', sans-serif;">Click <a href="{{URL::to('login')}}">here if it was a mistake</a>.</li>
+              <li style="font-family: 'Lato', sans-serif;">Click <a href="">here to reset</a>.</li>
             </ul>
-
-            <p style="font-family: 'Lato', sans-serif;">Please Login with your temporary password and choose a create a new one from profile</p>
-
           </div>
-
         </div>
-
         <div id="footer" style="width: 99.7%; border:1px solid; border-color:  #dfe0df;">
           <img id="logo" src="http://apex.apengage.io/img/apengage_logo.png" style="width: 100px; margin: 20px auto auto 40%;"/>
         </div>
-
       </div>
 
   </body>

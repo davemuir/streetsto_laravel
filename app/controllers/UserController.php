@@ -16,8 +16,6 @@ class UserController extends Controller {
 	*/  
 
 
-
-
 public function view(){
 	return View::make('user/login');
 }
@@ -86,6 +84,7 @@ public function loginForm() {
 
 //handle add user/company from form.
 public function autoAddUser($fname,$lname,$email,$company){
+
       $company = new Company;
       $company->name = Input::get('company');
       $company->save();
@@ -150,5 +149,51 @@ public function autoAddUser($fname,$lname,$email,$company){
     Auth::logout();
     return Redirect::to("/login");
   }
+  
+  
+	
+	//displays the form for the new password to be added.
+//	public function forgotPassword($email){
+//---------------------------------------------------------------------
+	public function forgotPassword(){
+	/*
+$data["errors"] = new MessageBag(["company" => ["Email invalid."]]);
+//$data["email"] = Input::get("email");
+return Redirect::to("/login")->withInput($data);
+*/
+	try{
+		$myUser = User::where('email','=',Input::get("email"))->get();
+		if($myUser){
+			foreach ($myUser as $key => $value) {
+				$id    = $value->_id;
+				$fname = $value->fname;
+				$lname = $value->lname;
+				$email = $value->email;
+			}
+			$data = array(
+				"fname"    => $fname,
+				"lname"    => $lname,
+				"tempPass" => "1234"
+			);
+			$userData = array(
+				"email" => $email,
+				"fname" => $lname.','.$fname
+			);
+			Mail::send('emails.passwordReset', $data, function($message) use($userData){
+				$message->to($userData['email'], "candidate")->subject('Hi '.$userData['fname'].', have you forgotten your password?');
+			});
+			return View::make('pwreset/reset',array('user' => $userData));
+		}else{
+			return View::make('pwreset/error',array('error' => 'user not found'));
+		}
+	}catch(Exception $e){
+		return View::make('pwreset/error',array('error' => 'user not found<br/>'.$e->getMessage()));
+	}
+//		return Redirect::to("/");
+//---------------------------------------------------------------------
+//		return Redirect::to("/resetpassword");
+	}
 
 }
+
+
