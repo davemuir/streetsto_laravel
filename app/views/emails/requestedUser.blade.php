@@ -32,6 +32,8 @@
               <li style="font-family: 'Lato', sans-serif;">Company - {{$company}}</li>
               <li style="font-family: 'Lato', sans-serif;">Access Level - {{$access}}</li>
               <li style="font-family: 'Lato', sans-serif;">First Name - {{$fname}}</li>
+              <li style="font-family: 'Lato', sans-serif;">Last Name - {{$lname}}</li>
+               <li style="font-family: 'Lato', sans-serif;">Temp Password - {{$tempPass}}</li>
             </ul>
 
             <p style="font-family: 'Lato', sans-serif;">Please Login with your temporary password and choose a create a new one from profile</p>

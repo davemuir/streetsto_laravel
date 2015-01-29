@@ -9,10 +9,9 @@
 ?>
 <div class="innerContent">
 <div class="container">
-<h1>CMS</h1>
+<h1>Perks</h1>
 <li><a href="{{URL::route('new perk')}}">create perk</a></li>
 
-<h4>Perks</h4>
 <table class="table table-striped">
 	<thead>
 		<tr>

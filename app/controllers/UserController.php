@@ -23,36 +23,35 @@ public function view(){
 }
 
 public function registerForm(){
- /* $company = new Company;
-  $company->name = Input::get('company');
-  $company->save();
 
-  $companyID = $company->_id;
-  $user = new User;
-  $user->email = Input::get('email');
-  $user->fname = Input::get('fname');
-  $user->lname = Input::get('lname');
-  $user->phone = Input::get('phone');
-  $user->companyID = $companyID;
-  $user->user_access = "Admin";
-  $user->password = Hash::make(Input::get('password'));
-  $user->save();*/
   $fname = Input::get('fname');
   $lname =  Input::get('lname');
   $email = Input::get('email');
   $company = Input::get('company');
+  $phone = Input::get('phone');
   
+    //curl to get the locations json 
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL,"http://sto.apengage.io/filemaker/locations_json.php");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $response = curl_exec ($ch);
+  curl_close ($ch);
+
   $data = array(
       "fname" => $fname,
       "lname" => $lname,
       "email" => $email,
-      "company" => $company
+      "company" => $company,
+      "phone" => $phone,
+      "response" => $response
   );
   $user = User::where('user_access','=','Admin')->get();
     $userTo = array();
       foreach ($user as $key => $value) {
           $userTo[] = $value->email;
       }
+
+
 
   Mail::send('emails.newUserRequest', $data, function($message) use ($userTo){
     $message->to($userTo);
@@ -98,14 +97,68 @@ public function autoAddUser($fname,$lname,$email,$company){
       $newUser->user_access = "Staff";
       $newUser->companyID = $companyID;
      
+      $length = 8;
+      $password = "";
+        // define possible characters
+        $possible = "0123456789abcdfghjkmnpqrstvwxyz";
+        $i = 0;
+        // add random characters to $password until $length is reached
+        while ($i < $length) {
+          // pick a random character from the possible ones
+          $char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
+          // we don't want this character if it's already in the password
+          if (!strstr($password, $char)) {
+            $password .= $char;
+            $i++;
+          }
+       }
+      $data = array(
+        "company" => $company->name,
+        "access" => $newUser->user_access,
+        "email" => $email,
+        "fname" => $newUser->fname,
+        "lname" => $newUser->lname,
+        "tempPass" => $password
 
-      /*$allUser = User::all();
-      foreach($allUser as $key => $value){
-        if($value->email == $newUser->email){
-          $validator = array('message' => 'The email you provided already is registered');
-          return Redirect::to("/addUser")->withErrors($validator);
-        }
-      }*/
+      );
+      $userData = array(
+        "email" => $email,
+        "fname" => $newUser->fname
+      );
+
+      $newUser->password = Hash::make($password);
+      $newUser->save();
+
+      Mail::send('emails.requestedUser', $data, function($message) use($userData){
+          $message->to($userData['email'], "candidate")->subject('Hi '.$userData['fname'].', you have been granted user access');
+      });
+
+      return Redirect::to('/dashboard');
+  }
+
+  public function importCompany(){
+     
+      $email = Input::get("email");
+      $companyBranch = Input::get("branch");
+      //return $companyBranch .' - '. $companyName;
+      //exit;
+
+      $company = new Company;
+      $company->name = Input::get('company');
+      $company->locationID = Input::get('branch');
+      $company->save();
+      $companyID = $company->_id;
+      $locationID = $company->locationID;
+
+      $newUser = new User;
+      $newUser->fname = Input::get("fname");
+      $newUser->lname =Input::get("lname");
+      $newUser->email = Input::get("email");
+      $newUser->locationID = $locationID;
+      $newUser->user_access = "Staff";
+      $newUser->companyID = $companyID;
+     
+
       $length = 8;
       $password = "";
         // define possible characters

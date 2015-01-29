@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Daravel PHP Framework</title>
+	<title>Daraved PHP Framework</title>
 
 </head>
 <body>

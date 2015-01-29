@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Streets Toronto</a>
+            <a class="navbar-brand" href="#"><img style="max-height:26px;" src="http://{{$_SERVER['SERVER_NAME']}}/img/keylogo.png"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">

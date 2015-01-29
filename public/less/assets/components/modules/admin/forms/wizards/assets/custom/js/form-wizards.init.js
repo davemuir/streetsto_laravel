@@ -19,7 +19,7 @@ $(function()
 
 				switch(index) {
 				    case 1:
-				    var uri = '/vendorlist';
+				    var uri = '/index.php/vendorlist';
 				   			  var xhr = new XMLHttpRequest();
 						       xhr.open('GET', uri, false)
 						      xhr.send(null);
@@ -101,7 +101,7 @@ $(function()
 			onTabShow: function(tab, navigation, index)
 			{
 				if(index==1){
-				    var uri = '/vendorlist';
+				    var uri = '/index.php/vendorlist';
 				   			  var xhr = new XMLHttpRequest();
 						       xhr.open('GET', uri, false)
 						      xhr.send(null);

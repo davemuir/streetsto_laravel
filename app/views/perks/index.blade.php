@@ -93,7 +93,7 @@ $(document).ready(function(){
     </div>
 
 
-   <h2 class="titleHeading"><span class='campaignReach'><? $size = sizeOf($activeArray); echo $size;?></span> Campaigns</h2>
+   <h2 class="titleHeading"><span class='campaignReach'><? $size = sizeOf($activeArray); echo $size;?></span> Offers</h2>
      <div class="myToolTip">
         <div class="tt">
           <a id="tt-help" href="#"></a>

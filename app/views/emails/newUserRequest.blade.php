@@ -17,22 +17,42 @@
 
           <div id="title" style="width: 99.7%; border:1px solid; border-color:  #dfe0df;">
             <img src="http://apex.apengage.io/img/apengage_background.png" style="width:100%; max-width: 600px;"/>
-            <h1 style="text-align:center; font-family: 'Lato', sans-serif;">New User Request</h1>
+            <h1 style="text-align:center; font-family: 'Lato', sans-serif;">New User/Company Request</h1>
           </div>
           
           <div id="content" style="width: 99.7%; border:1px solid; border-color:  #dfe0df;">
             <div id="text_content" style="width:  90%; margin:0 auto;">
 
-                <h2 style="font-family: 'Lato', sans-serif;">{{$fname}} {{$lname}} has requested user access to your apengage platform</h2>
+                <h2 style="font-family: 'Lato', sans-serif;">{{$fname}} {{$lname}} has requested user access to your Toronto City Key platform</h2>
                 <h3 style="font-family: 'Lato', sans-serif;">sign up details are below:</h3>
                 
                 <ul>
-                  <li style="font-family: 'Lato', sans-serif;">{{$fname}}</li>
-                  <li style="font-family: 'Lato', sans-serif;">{{$lname}}</li>
-                  <li style="font-family: 'Lato', sans-serif;">{{$email}}</li>
+                  <li style="font-family: 'Lato', sans-serif;">First Name - {{$fname}}</li>
+                  <li style="font-family: 'Lato', sans-serif;">Last Name - {{$lname}}</li>
+                  <li style="font-family: 'Lato', sans-serif;">Email - {{$email}}</li>
+                   <li style="font-family: 'Lato', sans-serif;">Phone no. - {{$phone}}</li>
+                  <li style="font-family: 'Lato', sans-serif;">Company - {{$company}}</li>
                 </ul>
-
-                <a href="{{URL::to('autoAdd', array('fname' => $fname, 'lname' => $lname, 'email' => $email, 'company'=>$company))}}"><p style="font-family: 'Lato', sans-serif;">Add this User to the system?  User will be added with staff permissions by default.</p></a>
+                <p>
+                  Please review this point of contact.  When you are ready to give login/account access, approve them and associate a company from the database to them to operate under.
+                </p>
+                <?php 
+                $response = json_decode($response);
+                ?>
+                  {{ Form::open([
+                     "route"        => "import company",
+                     "autocomplete" => "off",
+                     'method' =>'POST'
+                     ]) }}
+                {{Form::hidden('email', $email, ["id"=>"placeLogin", 'class' => 'form-control hidden'])}}
+                {{Form::hidden('company', $company, ["id"=>"placeLogin", 'class' => 'form-control hidden'])}}
+                {{Form::hidden('fname', $fname, ["id"=>"placeLogin", 'class' => 'form-control hidden'])}}
+                {{Form::hidden('lname', $lname, ["id"=>"placeLogin", 'class' => 'form-control hidden'])}}
+                {{ Form::select("branch", $response, null, array('class' => 'form-control','id'=>'beacon_room')  ) }}
+                 {{Form::button('Approve', array('type' => 'submit', 'class' => 'btn btn-small', 'id' => 'signInBtn'))}}
+    
+                {{form::close()}}
+               <!-- <a href="{{URL::to('autoAdd', array('fname' => $fname, 'lname' => $lname, 'email' => $email, 'company'=>$company))}}"><p style="font-family: 'Lato', sans-serif;">Add this User to the system?  User will be added with staff permissions by default.</p></a>-->
 
             </div>
           </div>

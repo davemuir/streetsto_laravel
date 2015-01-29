@@ -25,16 +25,25 @@ public function view(){
 	$inactiveArray = Offer::where('active', false)->where('company_id',$user->companyID)->get();
 	return View::make('/perks/index')->with('activeArray',$activeArray)->with('inactiveArray',$inactiveArray);
 }
+//creates an offer
 public function create(){
 		$user= Auth::user();
 		if ($user) {
      
-		$company = $user->company;
-		return $company;
-		exit;
-		$beams = $company->perks;
-		return View::make('/perks/create')->with('beams', $beams);
-	}
+		$companyID = $user->companyID;
+		$locationID = $user->locationID;
+		$perks = Perk::where('companyID','=',$companyID)->get();
+		$perksArr = [];
+		foreach($perks as $perk){
+			$perksArr[$perk->_id] = $perk->title;
+		}
+		$beacons = Beacon::where('branchID','=',$locationID)->get();
+		$beaconsArr = [];
+		foreach($beacons as $beacon){
+			$beaconsArr[$beacon->_id] = $beacon->alias;
+		}
+		return View::make('/perks/create')->with('perks', $perksArr)->with('beacons', $beaconsArr);
+		}
 }
 public function newPerk(){
 	return View::make('/cms/new');
@@ -172,14 +181,26 @@ public function updatePerk(){
 		}
 	}
 
-//for editting offers
-public function editOffer(){
-	$user = Auth::user();
-	$companyID = $user->companyID;
-	$perks = Offer::where('companyID','=',$companyID)->get();
-	return View::make('/cms/index')->with('perks',$perks)->with('companyID',$companyID);
-}
+	//for editting offers
+	public function editOffer(){
+		$user = Auth::user();
+		$companyID = $user->companyID;
+		$perks = Offer::where('companyID','=',$companyID)->get();
+		return View::make('/cms/index')->with('perks',$perks)->with('companyID',$companyID);
+	}
 
+	//store offering
+	public function store(){
+		$user = Auth::user();
+
+		$offer = new Offer;
+		$offer->title = Input::get('title');
+		$offer->companyID = $user->companyID;
+		$offer->locationID = $user->locationID;
+		$offer->active = true; 
+		$offer->save();
+		return Redirect::to('perks/index');
+	}
 
 }
 

@@ -19,8 +19,68 @@ class BeaconsController extends Controller {
 
 
 public function view(){
-	return View::make('beacons/index');
+    $user = Auth::user();
+    $company = Company::all();
+    $branches = [];
+    foreach($company as $branch){
+      $companyID = $branch['_id'];
+      //look for branches of this id
+      $branched = Branch::where('companyID','=',$companyID)->get();
+      $count = count($branched);
+
+      if($count > 0 ){
+        //multi branch it
+        foreach($branched as $b){
+          $branches[$b['_id']] = $branch['name'].'-'.$b['title'];
+        }
+        
+      }else{
+        $branches[$companyID] = $branch['name'];
+      }
+    }
+    $beacons = Beacon::all();
+    return View::make('beacons/index')->with('user', $user)->with('branches', $branches)->with('beacons',$beacons);
+	
 }
+public function store()
+  {
+
+      $user = Auth::user();
+    if ($user) {
+    $beacon = new Beacon;
+    $beacon->major = Input::get('major');
+    $beacon->minor = Input::get('minor');
+    $beacon->proximity_uuid = Input::get("proximity_uuid");
+    $beacon->alias = Input::get('alias');
+    $beacon->branchID = Input::get("branch");
+    $beacon->save();
+    
+
+    return Redirect::to('/dashboard');
+    }
+  } 
+
+  public function import(){
+    if($_POST){
+      $locationID = $_POST['locationID'];
+      $uuid = $_POST['uuid'];
+      $major = $_POST['major'];
+      $minor = $_POST['minor'];
+      $alias = $_POST['alias'];
+      $locationName = $_POST['name'];
+
+      $beacon = new Beacon;
+      $beacon->major = $major;
+      $beacon->minor = $minor;
+      $beacon->proximity_uuid = $uuid;
+      $beacon->alias = $alias;
+      $beacon->locationName = $locationName;
+      $beacon->branchID = $locationID;
+      $beacon->save();
+
+      return "beacon stored";
+    }
+  } 
 
 
 }

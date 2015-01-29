@@ -10,3 +10,5 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 <script src="/js/froala_editor.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+	<script src="/less/assets/components/modules/admin/forms/wizards/assets/lib/jquery.bootstrap.wizard.js?v=v2.3.0"></script>
+<script src="/less/assets/components/modules/admin/forms/wizards/assets/custom/js/form-wizards.init.js?v=v2.3.0"></script>
