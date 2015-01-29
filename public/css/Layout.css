@@ -621,8 +621,14 @@ a.mediaList.selected img {
     margin-left: 50px;
   
 }
-#loginHeader div {
+#loginHeader .col-md-6 {
   
-    
+    float: none;
+  
+}
+
+.row-register .col-md-4 {
+  
+    float: none;
   
 }

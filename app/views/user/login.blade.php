@@ -12,13 +12,14 @@
 ?>
 <div class="row" id="loginHeader">
 
-		<div class='col-md-6'>
-			<img src='img/apengageBigLogo.png' id='frontPageLogo'/>
+		<div class='img_logo'>
+			<img src='http://{{$_SERVER['SERVER_NAME']}}/img/apengage_logo.png' id='frontPageLogo'/>
 		</div>
-			
+			<br />
+			<br />
 	
 		<div class="col-md-6">
-		<div class="row">
+		<div class="row-register">
 			{{Form::open(['route' => 'login form', 'action'=>  'UserController@loginForm', 'autocomplete' => 'off', "class" => "form-inline", 'id' => 'loginForm'])}}
 			    	
 			<div class="col-md-4">	    
@@ -52,12 +53,11 @@
 		<br/>
 		<br/>
 		<div class="col-md-6">
-		<div class="row">
+		<div class="row-register">
 			{{Form::open(['route' => 'register form', 'action'=>  'UserController@registerForm', 'autocomplete' => 'off', "class" => "form-inline", 'id' => 'loginForm'])}}
 			    	
 			<div class="col-md-4">
 
-			    
 			    {{Form::text('email', Input::get('email'), ["id"=>"placeLogin",'placeholder' => 'E-mail', 'class' => 'form-control'])}}
 			</div>
 			<div class="col-md-4">	    
