@@ -209,24 +209,36 @@ public function autoAddUser($fname,$lname,$email,$company){
 //	public function forgotPassword($email){
 //---------------------------------------------------------------------
 	public function forgotPassword(){
-	/*
-$data["errors"] = new MessageBag(["company" => ["Email invalid."]]);
-//$data["email"] = Input::get("email");
-return Redirect::to("/login")->withInput($data);
-*/
-	try{
+		$id=0;
 		$myUser = User::where('email','=',Input::get("email"))->get();
-		if($myUser){
-			foreach ($myUser as $key => $value) {
-				$id    = $value->_id;
-				$fname = $value->fname;
-				$lname = $value->lname;
-				$email = $value->email;
+	
+		foreach ($myUser as $key => $value) {
+			$id    = $value->_id;
+			$fname = $value->fname;
+			$lname = $value->lname;
+			$email = $value->email;
+		}
+		if( $id==0 ){
+			return View::make( 'user/login',array('ttl' => 'Error' , 'msg' => 'user not found' , 'mail' => Input::get("email") ) );
+//			return View::make('pwreset/error',array('error' => 'user not found<br/>'));
+		}else{
+			$code=md5(rand(10000,99999).$id);
+			$expDate=date("Y-m-d",strtotime('+1 week'));
+			$myCount = RestUser::where('user_id','=',$id)->count();
+			if($myCount==0){
+		    	  $restUser = new RestUser;
+			      $restUser->user_id  = $id;
+			      $restUser->code     = $code;
+			      $restUser->exp_date = $expDate;
+		    	  $restUser->save();
+			}else{
+				$myUser = RestUser::where('user_id','=',$id)->update(array('code'=>$code , "exp_date"=>$expDate));
 			}
 			$data = array(
-				"fname"    => $fname,
-				"lname"    => $lname,
-				"tempPass" => "1234"
+				"fname"   => $fname,
+				"lname"   => $lname,
+				"expDate" => $expDate,
+				"code"    => $code
 			);
 			$userData = array(
 				"email" => $email,
@@ -235,18 +247,60 @@ return Redirect::to("/login")->withInput($data);
 			Mail::send('emails.passwordReset', $data, function($message) use($userData){
 				$message->to($userData['email'], "candidate")->subject('Hi '.$userData['fname'].', have you forgotten your password?');
 			});
-			return View::make('pwreset/reset',array('user' => $userData));
-		}else{
-			return View::make('pwreset/error',array('error' => 'user not found'));
+//			return View::make('pwreset/reset',array('user' => $userData));
+			return View::make( 'user/login',array('ttl' => 'Response' , 'user' => $userData) );
 		}
-	}catch(Exception $e){
-		return View::make('pwreset/error',array('error' => 'user not found<br/>'.$e->getMessage()));
-	}
-//		return Redirect::to("/");
-//---------------------------------------------------------------------
 //		return Redirect::to("/resetpassword");
 	}
+//---------------------------------------------------------------------
+	public function resetPassword($code){
+		try{
+			$id=0;
+			$code=( trim($code)=='' )?'0':trim($code);
+			$myResetObj = RestUser::where('code','=',$code)->get();
+			foreach ($myResetObj as $key => $value) {
+				$id       = $value->user_id;
+				$exp_date = $value->exp_date;
+			}
+			if($id==0){
+				$pageData=array(
+					'msg' => "Sorry! The code is invalid."
+				);
+			}else{
+				$exDate=strtotime($exp_date);
+				if( $exDate<time() ){
+					$pageData=array( 'msg' => "This code has been expired." );
+				}else{
+					$myUser = User::where('_id','=',$id)->get();
+					$pageData=array();
+					foreach ($myUser as $key => $value) {
+						$pageData['_id'  ] = $value->_id;
+						$pageData['fName'] = $value->fname;
+						$pageData['lName'] = $value->lname;
+						$pageData['eMail'] = $value->email;
+					}
+				}
+			}
+			return View::make('pwreset/reset',$pageData);
+		}catch(Exception $e){
+			$pageData=array(
+				'msg' => "Sorry! The code is invalid."
+			);
+			return View::make('pwreset/reset',$pageData);
+		}
+	}
+//---------------------------------------------------------------------
+	public function doResetPassword(){
+		$user_id=Input::get("user_id");
+		$user_ps=Input::get("password");
+		$user_ps=Hash::make($user_ps);
 
+		$myUser = User::where('_id','=',$user_id)->update(array('password'=>$user_ps));
+		if($myUser!=0){
+			RestUser::where('user_id','=',$user_id)->delete();
+		}
+//
+		return View::make('pwreset/reset',array('msg'=>'Your new password has been set'));
+	}
+//---------------------------------------------------------------------
 }
-
-

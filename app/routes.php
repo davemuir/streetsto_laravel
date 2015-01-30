@@ -13,16 +13,25 @@
 //get the user
 $user =Auth::user();
 //login routes
-Route::get('/',  ["as" => "Login","uses" => "UserController@view"]);
+Route::get("/", ["as" => "Login","uses" => "UserController@view"]);
 Route::get("/login", ["as" => "login","uses" => "UserController@view"]);
 Route::post("/login", ["as" => "login form","uses" => "UserController@loginForm"]);
 Route::get("/logout", ["as" => "user/logout", "uses" => "UserController@logoutAction"]);
 Route::post("/register", ["as" => "register form","uses" => "UserController@registerForm"]);
 Route::get("/passwordReset", ["as" => "Reset Password", "uses" => "UserController@passwordView"]);
+//Route::post("/forgotPassword", ["as" => "Forgot Password", "uses" => "UserController@forgotPassword"]);
+Route::post("/", ["as" => "Forgot Password", "uses" => "UserController@forgotPassword"]);
+//reset password
+Route::any("/pwreset/reset/{code}", ["as" => "Rest Password", "uses" => "UserController@resetPassword"]);
+Route::post("/pwreset/reset/", ["as" => "Reset Form", "uses" => "UserController@doResetPassword"]);
+
 //email calls
 Route::any("/autoAdd/{fname?}/{lname?}/{email?}/{company?}",["as" => "Auto Add User", "uses" => "UserController@autoAddUser"]);
-Route::post('/beacons/filemaker/{value?}',  ["as" => "import beacons","uses" => "BeaconsController@import"]);
+//added 
 Route::any("/import/company",["as" => "import company", "uses" => "UserController@importCompany"]);
+//outside calls
+Route::post("/beacons/update/{value?}", ["as" => "update Beacons", "uses" => "BeaconsController@updateBeacon"]);
+Route::post('/beacons/filemaker/{value?}',  ["as" => "import beacons","uses" => "BeaconsController@import"]);
 
 //dashboard
 Route::group(["before" => "auth"], function () {
@@ -39,13 +48,10 @@ Route::any("/cms/remove/{perkID?}", ["as" => "remove perk", "uses" => "PerksCont
 
 //beacons
 Route::get("/beacons/index", ["as" => "beacons", "uses" => "BeaconsController@view"]);
-Route::post("/beacons/store", ["as" => "Save Beacons", "uses" => "BeaconsController@store"]);
-//beacon vendor list
-Route::get("/vendorlist", function(){
-$beacons = DB::connection('mysql')->table('ap1_beacons')->get();
-return \Response::json($beacons);
-});
-
+Route::post("/beacons/store", ["as" => "Save Beacons", "uses" => "UserController@saveBeacons"]);
+//account
+Route::get("/user/profile", ["as" => "profile", "uses" => "UserController@profileView"]);
+Route::put("/user/profile", ["as" => "update profile", "uses" => "UserController@updateProfile"]);
 
 //offering
 //Route::resource('campaigns', 'CampaignController');
@@ -54,3 +60,9 @@ Route::get('/perks/edit/{offerID}', ["as" => 'edit offer', "uses" =>'PerksContro
 Route::get('/perks/create', ["as" => 'create offer', "uses" =>'PerksController@create']);
 Route::post('/perks/store', ["as" => 'store offer', "uses" =>'PerksController@store']);
 });
+//TEST
+//Route::get('/b1',  ["as" => "","uses" => "B1Controller@view"] );
+//Route::get('/', function(){ return 'Hello World'; });
+//Route::get('/b1',  ["as" => "reset","uses" => "B1Controller@view"] );
+//Route::get('', 'B1Controller@view');
+//Route::post('/b1', 'B1Controller@view');
