@@ -6,9 +6,7 @@
 @include("header")
 </head>
 <body>
-<div class='img_logo'>
-	<img src='http://{{$_SERVER['SERVER_NAME']}}/img/apengage_logo.png' id='frontPageLogo'/>
-</div>
+
 <?php if( isset($msg) ): ?>
 	<h2>{{$msg}}</h2>
 	{{Form::open(['route' => 'login', 'action'=>  'UserController@view', 'autocomplete' => 'off', "class" => "form-inline", 'id' => 'backForm'])}}

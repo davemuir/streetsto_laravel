@@ -224,15 +224,15 @@ public function autoAddUser($fname,$lname,$email,$company){
 		}else{
 			$code=md5(rand(10000,99999).$id);
 			$expDate=date("Y-m-d",strtotime('+1 week'));
-			$myCount = RestUser::where('user_id','=',$id)->count();
+			$myCount = ResetUser::where('user_id','=',$id)->count();
 			if($myCount==0){
-		    	  $restUser = new RestUser;
-			      $restUser->user_id  = $id;
-			      $restUser->code     = $code;
-			      $restUser->exp_date = $expDate;
-		    	  $restUser->save();
+		    	  $resetUser = new ResetUser;
+			      $resetUser->user_id  = $id;
+			      $resetUser->code     = $code;
+			      $resetUser->exp_date = $expDate;
+		    	  $resetUser->save();
 			}else{
-				$myUser = RestUser::where('user_id','=',$id)->update(array('code'=>$code , "exp_date"=>$expDate));
+				$myUser = ResetUser::where('user_id','=',$id)->update(array('code'=>$code , "exp_date"=>$expDate));
 			}
 			$data = array(
 				"fname"   => $fname,
@@ -257,7 +257,7 @@ public function autoAddUser($fname,$lname,$email,$company){
 		try{
 			$id=0;
 			$code=( trim($code)=='' )?'0':trim($code);
-			$myResetObj = RestUser::where('code','=',$code)->get();
+			$myResetObj = ResetUser::where('code','=',$code)->get();
 			foreach ($myResetObj as $key => $value) {
 				$id       = $value->user_id;
 				$exp_date = $value->exp_date;
@@ -297,7 +297,7 @@ public function autoAddUser($fname,$lname,$email,$company){
 
 		$myUser = User::where('_id','=',$user_id)->update(array('password'=>$user_ps));
 		if($myUser!=0){
-			RestUser::where('user_id','=',$user_id)->delete();
+			ResetUser::where('user_id','=',$user_id)->delete();
 		}
 //
 		return View::make('pwreset/reset',array('msg'=>'Your new password has been set'));

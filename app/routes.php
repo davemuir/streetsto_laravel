@@ -22,7 +22,7 @@ Route::get("/passwordReset", ["as" => "Reset Password", "uses" => "UserControlle
 //Route::post("/forgotPassword", ["as" => "Forgot Password", "uses" => "UserController@forgotPassword"]);
 Route::post("/", ["as" => "Forgot Password", "uses" => "UserController@forgotPassword"]);
 //reset password
-Route::any("/pwreset/reset/{code}", ["as" => "Rest Password", "uses" => "UserController@resetPassword"]);
+Route::any("/pwreset/reset/{code}", ["as" => "Reset Password", "uses" => "UserController@resetPassword"]);
 Route::post("/pwreset/reset/", ["as" => "Reset Form", "uses" => "UserController@doResetPassword"]);
 
 //email calls

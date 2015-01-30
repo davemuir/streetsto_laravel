@@ -617,17 +617,16 @@ a.mediaList.selected img {
 
 
 #loginHeader {
-  
+    margin-top: 50px;
     margin-left: 50px;
   
 }
 
-/*
 #loginHeader .col-md-6 {
   
     float: none;
   
-}
+}/*
 
 .row-register .col-md-4 {
   

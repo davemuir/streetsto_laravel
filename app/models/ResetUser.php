@@ -6,7 +6,7 @@
 //use Illuminate\Auth\Reminders\RemindableInterface;
 
 //class RestUser extends Mongap implements UserInterface, RemindableInterface {
-class RestUser extends Mongap {
+class ResetUser extends Mongap {
 
 	/**
 	 * The database table used by the model.
